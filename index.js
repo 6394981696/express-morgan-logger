@@ -4,17 +4,9 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
-
-// Create a write stream (in append mode) for the access.log file
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'src', 'access.log'), { flags: 'a' });
-
-// Use Morgan logger middleware to log requests in a predefined format
 app.use(morgan('combined', { stream: accessLogStream }));
-
-// Middleware to parse incoming JSON request body
 app.use(express.json());
-
-// Define routes
 app.get('/', (req, res) => {
     res.status(200).send('Welcome to the Home Page');
 });
